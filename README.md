@@ -8,6 +8,7 @@
 python -m pip install --upgrade pip
 
 pip config set global.index-url https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple
+
 再输入以下命令安装依赖库
 
 pip install requests
