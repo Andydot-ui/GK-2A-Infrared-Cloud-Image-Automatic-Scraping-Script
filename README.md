@@ -26,10 +26,6 @@ python3 /你的路径/name.py
 nohup python3 /你的路径/name.py >> /var/log/monitor_download.log 2>&1 &
 
 或者你用旧版本：nohup python /你的路径/name.py >> /var/log/monitor_download.log 2>&1 &
-# 自动清理日志
-
-你可以使用logcleaner.py来自动清理所产生的日志文件，需要单独运行
-
 # 爬取示例：
 
 GK-2A红外图片（10.5微米）
