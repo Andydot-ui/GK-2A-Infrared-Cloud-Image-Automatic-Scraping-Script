@@ -1,20 +1,6 @@
 # GK-2A-Infrared-Cloud-Image-Automatic-Scraping-Script
 用python脚本自动爬取GK-2A的红外增强卫星云图，可部署在服务器上
 
-爬取示例：
-
-GK-2A红外图片（10.5微米）
-
-<img width="1375" height="1409" alt="gk2a_ami_le1b_ir105_fd020ge_202511141840 srv" src="https://github.com/user-attachments/assets/a072d95d-8837-4453-b6d6-ad844b6ce7ce" />
-
-GK-2A全彩图片
-
-<img width="1375" height="1409" alt="gk2a_ami_le1b_rgb-true_fd010ge_202511150230 srv" src="https://github.com/user-attachments/assets/11ccadae-5d22-4214-aa9d-ed1e76ed1bb1" />
-
-FY4B全盘彩色图片
-
-![FY4B_FullDisk_202511150445(1)](https://github.com/user-attachments/assets/fc2387d7-316b-49f9-90c9-d8a2f33c6b1b)
-
 在运行前请确保你已经安装python环境
 # 安装依赖库
 打开电脑终端，输入以下命令更新python和源（国外用户可忽略这一步）
@@ -40,3 +26,21 @@ python3 /你的路径/name.py
 nohup python3 /你的路径/name.py >> /var/log/monitor_download.log 2>&1 &
 
 或者你用旧版本：nohup python /你的路径/name.py >> /var/log/monitor_download.log 2>&1 &
+# 自动清理日志
+
+你可以使用logcleaner.py来自动清理所产生的日志文件，需要单独运行
+
+# 爬取示例：
+
+GK-2A红外图片（10.5微米）
+
+<img width="1375" height="1409" alt="gk2a_ami_le1b_ir105_fd020ge_202511141840 srv" src="https://github.com/user-attachments/assets/a072d95d-8837-4453-b6d6-ad844b6ce7ce" />
+
+GK-2A全彩图片
+
+<img width="1375" height="1409" alt="gk2a_ami_le1b_rgb-true_fd010ge_202511150230 srv" src="https://github.com/user-attachments/assets/11ccadae-5d22-4214-aa9d-ed1e76ed1bb1" />
+
+FY4B全盘彩色图片
+
+![FY4B_FullDisk_202511150445(1)](https://github.com/user-attachments/assets/fc2387d7-316b-49f9-90c9-d8a2f33c6b1b)
+
