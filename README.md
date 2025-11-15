@@ -13,8 +13,7 @@ GK-2A全彩图片
 
 FY4B全盘彩色图片
 
-![FY4B_FullDisk_202511150445(1)](https://github.com/user-attachments/assets/282771f5-66ce-4021-862f-40633783a984)
-
+![FY4B_FullDisk_202511150445(1)](https://github.com/user-attachments/assets/fc2387d7-316b-49f9-90c9-d8a2f33c6b1b)
 
 在运行前请确保你已经安装python环境
 # 安装依赖库
@@ -38,6 +37,6 @@ python3 /你的路径/name.py
 
 2.长期运行（关闭终端后脚本将始终在后台运行，直到关闭主机，适用于linux，mac）
 
-nohup python3 /你的路径/name.py
+nohup python3 /你的路径/name.py >> /var/log/monitor_download.log 2>&1 &
 
-或者你用旧版本：nohup python /你的路径/GK-2A_Infrared.py
+或者你用旧版本：nohup python /你的路径/name.py >> /var/log/monitor_download.log 2>&1 &
