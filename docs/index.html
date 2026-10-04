@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>GK-2A 云图自动抓取脚本 — 让卫星云图自己找上门</title>
+<meta name="description" content="开源 Python 脚本，自动定时抓取 GK-2A 红外增强、全彩云图与 FY-4B 全盘彩色云图，可部署在服务器上长期运行。">
+<meta property="og:title" content="GK-2A 云图自动抓取脚本">
+<meta property="og:description" content="自动定时抓取 GK-2A / FY-4B 卫星云图，可部署在服务器上长期运行。">
+<meta property="og:image" content="https://gh-proxy.com/https://raw.githubusercontent.com/Andydot-ui/GK-2A-Infrared-Cloud-Image-Automatic-Scraping-Script/main/docs/images/gk2a-infrared.png">
+<link rel="preconnect" href="https://gh-proxy.com">
+<link rel="icon" href="https://gh-proxy.com/https://raw.githubusercontent.com/Andydot-ui/Vchange/main/docs/images/logo-light-theme.png" media="(prefers-color-scheme: light)">
+<link rel="icon" href="https://gh-proxy.com/https://raw.githubusercontent.com/Andydot-ui/Vchange/main/docs/images/logo-dark-theme.png" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">跳转到主要内容</a>
+
+<!-- 导航 -->
+<header class="nav" id="nav">
+  <nav class="nav-inner" aria-label="主导航">
+    <a class="nav-logo" href="#top" aria-label="返回顶部">
+      <span class="nav-dot" aria-hidden="true"></span>
+      GK-2A Scraper
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="打开菜单" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="http://justice0418.qd.je/">Home Page</a></li>
+      <li><a href="#gallery">云图示例</a></li>
+      <li><a href="#features">功能</a></li>
+      <li><a href="#start">快速开始</a></li>
+      <li><a href="https://github.com/Andydot-ui/GK-2A-Infrared-Cloud-Image-Automatic-Scraping-Script" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+<!-- 首屏 -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <p class="hero-eyebrow reveal">开源 · Python · GPL-3.0</p>
+    <h1 class="reveal">卫星云图，<br class="hero-br">自动找上门。</h1>
+    <p class="hero-sub reveal">每 20 分钟一张，红外增强、全彩、全盘彩色，<br>定时抓取、自动重试，安安静静跑在你的服务器上。</p>
+    <div class="hero-links reveal">
+      <a class="btn btn-primary" href="https://github.com/Andydot-ui/GK-2A-Infrared-Cloud-Image-Automatic-Scraping-Script" target="_blank" rel="noopener">在 GitHub 上查看</a>
+      <a class="btn btn-ghost" href="#start">快速开始 ›</a>
+    </div>
+  </div>
+</section>
+
+<!-- 云图示例 -->
+<section class="section" id="gallery">
+  <div class="section-head reveal">
+    <h2>抓回来的是这样的。</h2>
+    <p>全部来自官方数据源，原图保存、原样归档。</p>
+  </div>
+  <div class="gallery">
+    <figure class="shot reveal">
+      <img src="images/gk2a-infrared.png" alt="GK-2A 红外增强云图示例" loading="lazy">
+      <figcaption>
+        <strong>GK-2A 红外增强</strong>
+        <span>10.5 微米红外窗区 · 每 20 分钟一张</span>
+      </figcaption>
+    </figure>
+    <figure class="shot reveal">
+      <img src="images/gk2a-color.png" alt="GK-2A 全彩云图示例" loading="lazy">
+      <figcaption>
+        <strong>GK-2A 全彩</strong>
+        <span>真彩色 RGB · 与红外时次错开</span>
+      </figcaption>
+    </figure>
+    <figure class="shot reveal">
+      <img src="images/fy4b-fulldisk.jpg" alt="FY-4B 全盘彩色云图示例" loading="lazy">
+      <figcaption>
+        <strong>FY-4B 全盘彩色</strong>
+        <span>风云四号 B 星 · 国家卫星气象中心</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 功能 -->
+<section class="section section-alt" id="features">
+  <div class="section-head reveal">
+    <h2>该有的全都有，<br>不该有的一样也没有。</h2>
+    <p>脚本只做一件事：把云图按时、完整地抓下来。</p>
+  </div>
+  <div class="grid">
+    <div class="card reveal">
+      <h3>定时抓取</h3>
+      <p>对齐官方发布节奏：GK-2A 红外在每小时 0/20/40 分，全彩在 10/30/50 分，发布后延迟 20 分钟下载，不扑空。</p>
+    </div>
+    <div class="card reveal">
+      <h3>自动重试</h3>
+      <p>下载失败自动重试，最多 3 次；单张失败进入独立重试队列，最长可向前补抓 30 天的历史云图。</p>
+    </div>
+    <div class="card reveal">
+      <h3>文件校验</h3>
+      <p>下载完成先验 PNG 文件头、再查文件大小，坏图挡在门外，不会污染你的图库。</p>
+    </div>
+    <div class="card reveal">
+      <h3>历史记录</h3>
+      <p>每张图写入独立的 JSON 下载历史，断电重启后接着上次的进度跑，不重复、不遗漏。</p>
+    </div>
+    <div class="card reveal">
+      <h3>独立日志</h3>
+      <p>每个脚本有自己的一套日志，进度条每分钟刷新一次，半夜挂在哪里一眼就能看到。</p>
+    </div>
+    <div class="card reveal">
+      <h3>服务器友好</h3>
+      <p>一条 nohup 命令扔到后台，关掉终端照样跑；保存目录、日志目录随手可改，纯标准库加 requests。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 快速开始 -->
+<section class="section" id="start">
+  <div class="section-head reveal">
+    <h2>三步跑起来。</h2>
+    <p>需要 Python 3 与一条网络连接，其余的交给脚本。</p>
+  </div>
+  <div class="steps">
+    <div class="step reveal">
+      <span class="step-num">1</span>
+      <div>
+        <h3>安装依赖</h3>
+        <p>只需要 requests：</p>
+        <pre><code>pip install requests</code></pre>
+      </div>
+    </div>
+    <div class="step reveal">
+      <span class="step-num">2</span>
+      <div>
+        <h3>改好保存目录</h3>
+        <p>打开脚本顶部，把 <code>SAVE_BASE_DIR</code> 和 <code>LOG_DIR</code> 改成你的路径。</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <span class="step-num">3</span>
+      <div>
+        <h3>运行</h3>
+        <p>临时运行，终端关了就停：</p>
+        <pre><code>python3 /你的路径/GK2A_Infrared_downloader.py</code></pre>
+        <p>或者挂到服务器后台长期运行：</p>
+        <pre><code>nohup python3 /你的路径/GK2A_Infrared_downloader.py &gt;&gt; /var/log/gk2a.log 2&gt;&amp;1 &amp;</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <div class="footer-inner">
+    <p class="footer-note">用 Python 写的，为喜欢看云的人写的。</p>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>项目</h4>
+        <a href="https://github.com/Andydot-ui/GK-2A-Infrared-Cloud-Image-Automatic-Scraping-Script" target="_blank" rel="noopener">GitHub 仓库</a>
+        <a href="http://justice0418.qd.je/">Home Page</a>
+        <a href="https://andydot-ui.github.io/Vchange/" target="_blank" rel="noopener">Vchange</a>
+      </div>
+      <div class="footer-col">
+        <h4>数据来源</h4>
+        <a href="https://nmsc.kma.go.kr/" target="_blank" rel="noopener">韩国气象厅 NMSC</a>
+        <a href="https://www.nsmc.org.cn/" target="_blank" rel="noopener">国家卫星气象中心</a>
+      </div>
+      <div class="footer-col">
+        <h4>许可</h4>
+        <a href="https://github.com/Andydot-ui/GK-2A-Infrared-Cloud-Image-Automatic-Scraping-Script/blob/main/LICENSE" target="_blank" rel="noopener">GPL-3.0</a>
+      </div>
+    </div>
+    <p class="footer-copy">© 2026 Andydot · 本站图片版权归各气象机构所有</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
